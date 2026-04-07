@@ -1,0 +1,27 @@
+// This is an empty Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ContextStore {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  projectId   String   @map("project_id") @db.VarChar(255)
+  type        String   @db.VarChar(50)
+  content     String   @db.Text
+  metadata    Json     @default("{}")
+  /// pgvector embedding column — managed via raw SQL
+  embedding   Unsupported("vector(1536)")?
+  contentHash String?  @unique @map("content_hash") @db.VarChar(64)
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@index([projectId], name: "idx_context_project")
+  @@index([contentHash], name: "idx_context_hash")
+  @@map("context_store")
+}
