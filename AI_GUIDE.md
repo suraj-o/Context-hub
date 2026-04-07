@@ -1,88 +1,88 @@
-# 🤖 The Ultimate AI Prompting & Memory Management Guide
+# 🧠 The Ultra-Deep Dive Guide to MCP Brain Server
 
-Welcome to the deep-dive guide for managing your MCP Brain Server context. 
-If you are developing a product using an AI Assistant integrated with this MCP Server, your productivity hinges on how effectively you instruct the AI to store, update, and search for knowledge. 
-
-A vague prompt gives vague context. A highly specific prompt creates a perfectly sculpted, immortal architectural memory.
+This is the definitive technical and operational manual for mastering your long-term memory server. It bridges the gap between raw database physics and conversational AI logic.
 
 ---
 
-## 🎯 1. The "Rules for AI" Cheat Sheet
+## 🛠 1. The Power-User Setup
 
-Before you do anything else, you can eliminate 90% of your frustration by copy-pasting the following rules into your IDE's global "Rules for AI" (or "Custom Instructions" / "System Prompt"). 
+To ensure your AI agent operates at maximum efficiency, the **Project UUID** must be prioritized.
 
-This guarantees the AI automatically knows *how* to use the underlying tools without you needing to micromanage it:
-
-> **MCP Brain Server Rules:**
-> 1. **Identity:** I have an active MCP Server attached. My Project UUID is `92106197-043b-4bcf-87fd-91937d50d2af`. NEVER perform an MCP operation without using this UUID.
-> 2. **Structural Memory:** When creating new architecture, frameworks, or fundamental features, ALWAYS save the context using `importance: "critical"` and `context_type: "arch_decision"`. This ensures these files get a 2x persistence multiplier when searched later.
-> 3. **Time Sensitivity:** If I ask you for "recent changes" or "what we did last", ALWAYS pass `sort_by: "recency"` in your `search_context` tool.
-> 4. **No Duplication:** NEVER save duplicate entries for the same shifting feature. If a feature evolves, use `search_context` to find its exact `id`, then use `update_context` to modify the existing document.
+> **Master Rules for AI:**
+> - **Primary UUID:** `92106197-043b-4bcf-87fd-91937d50d2af`
+> - **Architecture First:** For structural changes, use `importance: "critical"` and `context_type: "arch_decision"`.
+> - **Deduplication:** Before saving, `search_context` for existing title matches. If it exists, use `update_context` to refine the record instead of creating a duplicate.
+> - **Recency Bias:** When I ask what we did "last", "recently", or "before", always set `sort_by: "recency"` in your search tool.
 
 ---
 
-## 💾 2. Saving Context (Dictating Importance & Type)
+## 🧬 2. The Science of Memory: How Retrieval Actually Works
 
-When you simply tell the AI, *"save this,"* the AI makes assumptions. It will likely default to assigning an `importance` of "medium" and a `context_type` of "note." If the data is actually a foundational architectural decision, it may get buried by future irrelevant notes.
+Understanding the "physics" of the search engine allows you to prompt more effectively.
 
-**The Golden Rule:** Explicitly dictate the **Importance** (`critical`, `high`, `medium`, `low`) and the **Context Type** (`arch_decision`, `code_snippet`, `task`, `conversation`, `note`).
+### The Hybrid Engine (RRF)
+Our server uses **Reciprocal Rank Fusion (RRF)**. It fires two independent searches simultaneously:
+1. **Semantic Search (70% weight):** Uses `pgvector` and OpenAI embeddings. It looks for "meaning" and "intent." 
+2. **Keyword Search (30% weight):** Uses PostgreSQL `tsvector` and `GIN` indexes. It looks for exact terminology (e.g., specific function names or error codes).
 
-### ❌ Bad Prompting
-> *"Save what we just did to the MCP brain."*
-**(Why it fails:** The AI will generate vague summary text, tag it as a generic "note", and assign standard importance.)
+### The "0.6" Similarity Threshold
+We enforce a strict **0.6 match threshold**. If an AI's search query shares less than 60% mathematical similarity with your saved context, the server returns **0 results**.
+*   **Bad Prompt:** *"Check my files."* (0% similarity to code).
+*   **Good Prompt:** *"Search the brain for the multi-tenant Prisma schema and vector storage logic."* (High similarity).
 
-### ✅ Good Prompting
-> *"Save this new multi-tenant database logic to the MCP brain as a **code_snippet**. Mark it as **high importance** so we don't lose it, and add tags for `prisma` and `multi-tenant`."*
-
-> *"Save our decision to migrate to Redis as an **arch_decision**. Mark it as **critical importance**. Include exactly why we moved away from MongoDB in the raw content."*
-
-**Deep Dive:** In our server backend, `critical` importance (score: 100) mathematically multiplies the search confidence by `2.0x`. A generic "medium" note (score: 50) multipies by `1.0x`. By explicitly calling out "critical importance", you are forcing the math to ensure you never lose that memory.
-
----
-
-## 🔍 3. Retrieval Strategy (Keyword Matching vs. Recency)
-
-Our MCP Server operates on a **Hybrid Search Engine** using Reciprocal Rank Fusion (RRF) targeting a 0.6 minimum cosine similarity threshold. A 70% weight is applied to semantic vector matches, and 30% to rigid keyword matching. 
-
-Because of this threshold, extremely vague conversational queries (like *"What was earlier?"*) fail drastically because they have no semantic relationship to actual code.
-
-**The Golden Rule:** Give the AI specific keywords, and proactively instruct it on *how* to map the sort filters.
-
-### ❌ Bad Prompting
-> *"Tell me what we did last."* 
-**(Why it fails:** The AI sends the literal phrase "Tell me what we did last" to the embedding engine. The cosine similarity to your source code drops below 0.6 and it returns an empty array.)
-
-### ✅ Good Prompting
-> *"Search the MCP brain for the `manage_workspace` feature. Once found, explain the setup back to me."*
-
-### ✅ Contextual Modifiers
-> *"Search the MCP brain for 'Redis Cache Implementation'. Critically, force the tool to **sort by recency** so I only see the newest implementation, disregarding the legacy setups we did 6 months ago."*
+### Importance Multipliers
+- `medium` (50 score) = **1.0x** (Standard)
+- `critical` (100 score) = **2.0x** (A critical document will rank #1 even if its similarity is lower than a medium document).
 
 ---
 
-## 🔄 4. The Updating Strategy (Preventing Context Duplication)
+## 🏗 3. Advanced Categorization
 
-The most common trap developers fall into is Context Duplication. 
+Use the right tool for the right job to keep your database organized.
 
-If you migrate from Node.js `v18` to Node.js `v20`, and you tell the AI *"Save to the brain that we use Node v20,"* the AI will happily oblige. 
-Three months later when you ask what Node version you use, the AI searches the database, finds **two completely contrasting notes** ("We use v18" and "We use v20") and hallucinates a conflicting answer.
+| Context Type | Purpose | Strategy |
+| :--- | :--- | :--- |
+| **`arch_decision`** | "The Why" - Patterns, frameworks, DB schema. | Save with `critical` importance. |
+| **`code_snippet`** | "The How" - Function logic, API endpoints, utilities. | Save with `high` importance. |
+| **`task`** | progress tracking, WIP states, TODOs. | Use `update_context` daily on a single task doc. |
+| **`conversation`** | Brainstorming sessions and meeting notes. | Save at `medium` importance. |
 
-**The Golden Rule:** If it describes an evolving state or architecture, force the AI to `update_context`.
-
-### ❌ Bad Prompting
-> *"We changed the CSS framework from Tailwind to Vanilla CSS. Save this to the brain."* 
-**(Why it fails:** The old Tailwind document still exists alongside the new Vanilla CSS document.)
-
-### ✅ Good Prompting
-> *"Search the MCP brain for our existing 'Frontend Tech Stack' document. Find its UUID. Once you have it, use the `update_context` tool to overwrite the content safely, removing Tailwind and adding Vanilla CSS. Do **not** create a new entry."*
-
-**Deep Dive:** By doing this, the server invokes the `updateContext` backend service. It automatically cleans the new text, recalculates the hashes, embeds the new vectors in OpenAI, deletes the old chunks, and cleanly saves the updated vector arrays entirely in the background.
+### 🔗 Context Linking (Graph Building)
+Our server supports a "Graph" of memories through `linked_context_ids`. 
+**Strategy:** When saving a code snippet, find the ID of the architectural decision it implements and pass it to the `linked_context_ids` array. This allows the AI to traverse relationships: *"I found the code, and here is the architectural reasoning linked to it."*
 
 ---
 
-## 🚀 5. Advanced Autonomous Workflow Commands
+## 🔄 4. The Checkpoint Protocol (Cross-Platform Handover)
 
-You can chain MCP commands in a single prompt to let the AI do heavy lifting while you take a break:
+Use this protocol when switching between Cursor, Claude Desktop, or after a context window reset.
 
-**The Autonomous Refactoring Request:**
-> *"Search our MCP Brain for the 'Authentication Flow' architectural decision. Read how we handled interceptors. Then, search the brain for any `code_snippets` related to 'Zustand Auth Store'. Combine those two pieces of context, analyze if our current open file matches those patterns. If it deviates, refactor the open file, and then finally use `update_context` to log the timestamp of this refactor into the original architecture document."* 
+### 📤 Step A: The "Snapshot" Prompt (The Exit)
+Before finishing a session, tell the AI:
+> *"We are ending this session. Execute a **Snapshot Task**:
+> 1. List every open file and its current state.
+> 2. Summarize the last 3 critical logic changes.
+> 3. List the next 5 specific code steps to perform.
+> 4. Save this as a `task` type with `high` importance titled 'Checkpoint: [Feature Name] - [Date]'."*
+
+### 📥 Step B: The "Hydrate" Prompt (The Entry)
+In the fresh session, tell the AI:
+> *"Load our memory. `search_context` for 'Checkpoint' sorted by `recency`. Read the newest entry. Use that state to update your local `task.md` and tell me which file you are starting on."*
+
+---
+
+## 🛠 5. Troubleshooting "AI Laziness"
+
+AI Assistants often try to "guess" based on local file names instead of checking the long-term memory. 
+
+### Symptom: "The search returned no results"
+**Cause:** The AI used a vague phrase (like "last tool") as the search query.
+**Fix:** Force the AI to be specific: *"Use `search_context` with the keyword 'Workspace Service' and `sort_by: "recency"`."*
+
+### Symptom: "I don't see any tools"
+**Cause:** The MCP server failed to boot or environment variables are missing.
+**Fix:** Run `pnpm run build` and restart your IDE. Ensure the `--env-file` path in `mcp.json` is absolute and correct.
+
+### Symptom: "The AI is hallucinating old info"
+**Cause:** You have duplicate context entries for the same feature.
+**Fix:** Use `manage_workspace` to list, find the IDs, and then use `delete_context` on the outdated duplicates. 🚀
