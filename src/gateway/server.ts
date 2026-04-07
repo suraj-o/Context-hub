@@ -3,6 +3,7 @@ import { z } from "zod";
 import { saveContext, getContext, updateContext, deleteContext } from "../services/write.service.js";
 import { searchContext } from "../services/query.service.js";
 import { manageProject } from "../services/project.service.js";
+import { manageWorkspace } from "../services/workspace.service.js";
 import { logger } from "../core/logger.js";
 import type { ContextType, ImportanceLevel, SearchMode, SortBy } from "../domain/types.js";
 
@@ -249,6 +250,32 @@ server.tool(
         workspaceId: args.workspace_id,
         name: args.name,
         repositoryUrl: args.repository_url,
+      });
+      return toolResult(result);
+    } catch (error) {
+      return errorResult(error);
+    }
+  }
+);
+
+// ── Tool 7: manage_workspace ───────────────────────────────
+server.tool(
+  "manage_workspace",
+  "Create, update, list, or delete workspaces. " +
+    "Workspaces are top-level containers for projects.",
+  {
+    action: z.enum(["create", "update", "list", "delete"]).describe("CRUD action"),
+    workspace_id: z.string().uuid().optional().describe("Workspace UUID (for update/delete)"),
+    user_id: z.string().uuid().optional().describe("User UUID (for create/list)"),
+    name: z.string().optional().describe("Workspace name (for create/update)"),
+  },
+  async (args) => {
+    try {
+      const result = await manageWorkspace({
+        action: args.action,
+        workspaceId: args.workspace_id,
+        userId: args.user_id,
+        name: args.name,
       });
       return toolResult(result);
     } catch (error) {

@@ -118,6 +118,15 @@ export interface ManageProjectInput {
   repositoryUrl?: string;
 }
 
+// ── Workspace Management ───────────────────────────────────
+
+export interface ManageWorkspaceInput {
+  action: "create" | "update" | "list" | "delete";
+  workspaceId?: string;
+  userId?: string;
+  name?: string;
+}
+
 // ── Importance Mapping ─────────────────────────────────────
 
 export const IMPORTANCE_SCORES: Record<ImportanceLevel, number> = {
