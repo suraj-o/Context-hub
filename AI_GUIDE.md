@@ -144,6 +144,30 @@ Never save a massive file as one context. Layer it.
 
 ---
 
+## 🔄 The Memory Lifecycle: Updating & Deleting Like a Pro
+
+To maintain a "High-Resolution" brain, you must actively prune and evolve your memories instead of just piling them up.
+
+### 📝 Scenario: The "Living Task" (Incremental Update)
+Keep one single task entry updated for a complex feature to avoid "context debt" (duplicates).
+- **Pro Tip:** Find the existing `task` ID first.
+> **User Prompt:** *"Search the brain for the 'Auth Module' task. Find its ID. Now, use `update_context` to refresh the status to 'In Progress' and add that we've finished the JWT implementation to the `raw_content`."*
+
+### 🏛️ Scenario: The "Architecture Pivot" (Foundation Update)
+When a core decision changes (e.g., REST -> GraphQL), update the foundation record.
+> **User Prompt:** *"Our database strategy has changed. Search for the `arch_decision` titled 'DB Strategy'. Use its ID to update the title to 'DB Strategy: NoSQL' and replace the content to reflect our move to MongoDB."*
+
+### 🗑️ Scenario: The "Clean House" (Targeted Deletion)
+Remove hallucinated or outdated records that are causing the AI to give wrong answers.
+- **Pro Tip:** Be surgical. Use `delete_context` with the specific ID.
+> **User Prompt:** *"I found three duplicate entries for 'Prisma Schema' from last month causing confusion. Find their IDs. Now, permanently delete the two oldest ones so only the current version remains."*
+
+### 📦 Scenario: The "Soft Deprecation" (Strategic Renaming)
+Instead of deleting, keep the historical "Why" but tell the AI not to use it anymore.
+> **User Prompt:** *"Search for the 'Legacy Stripe Helper'. Update its title to '[DEPRECATED] - Legacy Stripe Helper' and add a note to the top: 'Do not use. See new Braintree service instead.'."*
+
+---
+
 ## 🚀 Phase 7: The Continuity Protocol (Handovers)
 
 Use this when switching machines (Laptop -> Desktop) or when an AI agent hits its token limit.
