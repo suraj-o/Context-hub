@@ -189,3 +189,79 @@ In the new session:
 | **"AI is using old info"** | Duplicate contexts exist. Search by title, find the IDs, and `delete_context` the outdated ones. |
 | **"AI is being lazy"** | The AI is guessing from file names. Command it: *"Force a `search_context` call for [Feature Name] now."* |
 | **"Tool call failed"** | Local server is down. Run `pnpm run build` and restart your IDE. |
+
+---
+
+## 📚 Phase 9: The Master Scenario Bank (40 Pro Examples)
+
+### 💾 10 Scenarios for SAVING Context
+1.  **Bug Fix:** *"Save the fix for the 404 router error in `App.js`. Use `high` importance."*
+2.  **UI/UX:** *"Save the new Figma color tokens as an `arch_decision`. Tag it `#design-system`."*
+3.  **Security:** *"Save the JWT expiration fix. Mark it `critical` importance and tag it `#security`."*
+4.  **Meeting:** *"Summarize our discussion on the new API schema and save it as a `conversation`."*
+5.  **Refactor:** *"I just refactored the `UserService`. Save a code snippet showing the new generic interface."*
+6.  **Database:** *"Save the new Prisma migration logic. Link it to our 'Database Strategy' ID."*
+7.  **Test:** *"Save the unit test boilerplate for our controllers as a `code_snippet`."*
+8.  **WIP:** *"I'm halfway through the login page. Save my current progress as a `task` so we don't lose it."*
+9.  **API:** *"Save the new endpoint spec for `/v1/orders`. Mark it as `high` importance."*
+10. **Session Finish:** *"Execute a **📝 TASK SAVE SUMMARY** for everything we did in the last 2 hours."*
+
+### 🔍 10 Scenarios for QUERYING Context
+11. **Session Start:** *"Search for 'Handover Checkpoint' to see what we need to do next."*
+12. **Technical Deep-Dive:** *"Search my brain for the exact logic of the `validateToken` function."*
+13. **Fuzzy Meaning:** *"Search for anything related to how we handle user 'permissions' or 'roles'."*
+14. **Error Debugging:** *"Search for the keyword 'ECONNREFUSED' to see how we fixed it last time."*
+15. **Historical Review:** *"Search for all `arch_decision` entries from last month to see our tech stack evolution."*
+16. **Pattern Retrieval:** *"Find our standard pattern for 'error handling in Express middleware'."*
+17. **Dependency Check:** *"Search for all mentions of 'Redis' to see which modules depend on it."*
+18. **ID Lookup:** *"Find the ID of our 'Deployment Guide' so I can update it."*
+19. **Specific File:** *"Search for all tasks involving `auth.service.ts` sorted by recency."*
+20. **Broad Discovery:** *"Search for everything related to the 'Client Alpha' project."*
+
+### 🔄 10 Scenarios for UPDATING Context
+21. **Feature Completion:** *"Find the ID of the 'Login Feature' task and update its status to 'DONE'."*
+22. **Title Cleanup:** *"Update the title of context ID `uid-123` to be more descriptive."*
+23. **Adding Metadata:** *"Update ID `uid-456` and add `{ "vulnerable": false }` to the metadata."*
+24. **Content Refresh:** *"Our API changed. Update the 'API Spec' ID with the new endpoint list."*
+25. **Importance Move:** *"This bug fix is more important than we thought. Update it to `critical` importance."*
+26. **Tag Enrichment:** *"Update ID `uid-789` and add the tag `#urgent`."*
+27. **Deprecation:** *"ID `uid-000` is old logic. Update the title to '[DEPRECATED]' and add a warning."*
+28. **Linking:** *"Update this code snippet to link it to the new 'Auth Design' ID."*
+29. **Mistake Correction:** *"I gave you wrong info. Update ID `uid-abc` with the corrected logic."*
+30. **Status Sync:** *"Update our 'Progress Report' task with the 3 things we finished this afternoon."*
+
+### 🗑️ 10 Scenarios for DELETING Context
+31. **Duplicate Cleanup:** *"I accidentally saved the same note twice. Find the IDs and delete the duplicate."*
+32. **Outdated Logic:** *"We no longer use the 'OldCheckout' service. Delete its context ID permanently."*
+33. **Privacy Cleanse:** *"I accidentally saved an API key. Find that ID and delete it permanently now."*
+34. **Hallucination Correction:** *"You hallucinated a 'PaymentWorker'. Delete those records to fix your memory."*
+35. **Space Management:** *"Search for all `low` importance notes older than 6 months and delete them."*
+36. **Mistaken Task:** *"Delete the 'Test Task' I just created; it was a mistake."*
+37. **Experiment End:** *"We are not going with the 'Svelte' experiment. Delete all related `arch_decision` entries."*
+38. **Filing Error:** *"I saved this to the wrong project. Delete it here so I can save it to the correct project."*
+39. **Conflict Resolution:** *"This note conflicts with our new design. Find it and delete it."*
+40. **Fresh Start:** *"Delete our 'WIP Landing Page' task; I'm starting from scratch."*
+
+---
+
+## ♾️ Phase 10: Full Context Hydration (Feeding the Full Brain)
+
+Use this protocol when you start a mission-critical session and need the AI to be **"Omniscient"** about the project's history.
+
+### 🐳 The "Full Feed" Prompt
+> *"I'm starting a major refactor. Perform a **Full Context Hydration**:
+> 1. `search_context` for the last 5 `arch_decision` entries and summarize them.
+> 2. `search_context` for the last 5 `task` entries to see current progress.
+> 3. List every file we've modified in the last 48 hours.
+> Once done, tell me our 'Current Reality' and let's begin."*
+
+---
+
+## 🧼 Best Practices for Memory Hygiene
+
+To keep your Brain Server fast and accurate as your project grows to 10,000+ memories:
+
+1.  **The Weekly Prune:** Once a week, ask the AI: *"List our 10 oldest `task` entries. Let me know which ones I should delete or update to 'DONE'."*
+2.  **Keyword Precision:** Always use the unique technical name of your feature (e.g., `BraintreeHelper` vs. `PaymentFile`).
+3.  **Title Discipline:** Ensure titles are descriptive. `Refactor` is bad; `Refactor: JWT Token Refresh Logic` is perfect.
+4.  **Importance Scaling:** Use `low` for notes, `medium` for tasks, `high` for code, and `critical` for foundational architecture.
