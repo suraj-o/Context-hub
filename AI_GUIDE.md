@@ -102,3 +102,28 @@ Include the "Place" and the "Why" to prevent regression.
 | **"AI is using old info"** | Duplicate contexts exist. Search by title, find IDs, and `delete_context` the old ones. |
 | **"AI is being lazy"** | The AI is guessing from local names. Command: *"Force a `search_context` call now."* |
 | **"Tool call failed"** | Local server is down. Run `pnpm run build` and restart your IDE. |
+
+---
+
+## 🏗 7. Autonomous Bootstrapping: Creating Your Environment
+
+If you are starting from scratch and only have a **User ID**, you can command the AI to build your entire hierarchical infrastructure (Workspaces and Projects) autonomously.
+
+### 🏢 Scenario: Creating a New Workspace
+Use this when you want a new container for multiple related projects.
+> **User Prompt:** *"Use my user ID `your-user-id` to create a new workspace called 'Enterprise Development'. After creating it, list all my workspaces to confirm."*
+
+### 🚀 Scenario: Creating a New Project
+Projects live inside workspaces. You need a `workspace_id` to create one.
+> **User Prompt:** *"In workspace `your-workspace-id`, create a new project called 'MCP Brain Server'. Set the repository URL to `https://github.com/user/repo`. Tell me the new Project UUID when you are done."*
+
+### ⚡ Scenario: The "Total Setup" (One-Shot)
+The most efficient way to start a new engagement.
+> **User Prompt:** *"I'm starting a new project. 
+> 1. Use my user ID `your-user-id` to create a workspace called 'Client Alpha'. 
+> 2. Inside that new workspace, create a project called 'Booking Engine'. 
+> 3. Give me the new Project UUID so I can pin it in my settings."*
+
+### 🔍 Scenario: Infrastructure Discovery
+If you lost your IDs or want to see what is available.
+> **User Prompt:** *"Use my user ID `your-user-id` to list all my workspaces. Then, for the 'Enterprise' workspace, list all projects. I need to find the correct UUID to start saving context."*
