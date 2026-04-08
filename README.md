@@ -9,7 +9,7 @@ This server provides autonomous, semantic persistence via PostgreSQL + `pgvector
 ## 🌟 Key Features
 
 - **Multi-Tenant Architecture:** Strict data isolation through a Users → Workspaces → Projects hierarchy.
-- **Hybrid Search Engine:** Combines PostgreSQL full-text search (keyword) and pgvector cosine similarity (semantic) using Reciprocal Rank Fusion (70/30 weighting).
+- **Hybrid Search Engine:** Combines PostgreSQL full-text search (keyword) and `pgvector` cosine similarity (semantic) using Reciprocal Rank Fusion (70/30 weighting).
 - **Intelligent Processing Pipeline:** Automatically cleans whitespace, filters conversational noise, and chunks large content with overlapping boundaries before embedding.
 - **Ranking Boosts:** Sorts search results with multipliers based on recency, importance, and historical access frequency.
 - **Fully Local Protocol:** Communicates locally and securely over standard I/O (stdio transport). No external port exposure required.
