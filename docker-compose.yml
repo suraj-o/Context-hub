@@ -1,36 +1,47 @@
+version: '3.8'
+
 services:
-  postgres:
-    image: pgvector/pgvector:pg16
-    container_name: mcp-brain-db
-    restart: unless-stopped
+  db:
+    image: postgres:15-alpine
+    container_name: mcp-db
+    restart: always
     environment:
-      POSTGRES_USER: mcp_user
-      POSTGRES_PASSWORD: mcp_password
-      POSTGRES_DB: mcp_brain
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mcp
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U mcp_user -d mcp_brain"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
-  redis:
-    image: redis:7-alpine
-    container_name: mcp-brain-redis
-    restart: unless-stopped
+  api:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    container_name: mcp-api
+    restart: always
     ports:
-      - "6379:6379"
-    volumes:
-      - redisdata:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - "4000:4000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/mcp?schema=public
+      JWT_SECRET: ${JWT_SECRET}
+      MASTER_ENCRYPTION_KEY: ${MASTER_ENCRYPTION_KEY}
+      FRONTEND_URL: http://localhost:3000
+    depends_on:
+      - db
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: mcp-web
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+    depends_on:
+      - api
 
 volumes:
   pgdata:
-  redisdata:
