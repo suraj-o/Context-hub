@@ -10,10 +10,9 @@ import type {
   SaveContextResult,
   UpdateContextInput,
   DeleteContextInput,
-  IMPORTANCE_SCORES,
 } from "../domain/types.js";
 import { IMPORTANCE_SCORES as SCORES } from "../domain/types.js";
-import { DuplicateError, NotFoundError, NoiseContentError } from "../domain/errors.js";
+import { NotFoundError, NoiseContentError } from "../domain/errors.js";
 
 // ── Save Context ───────────────────────────────────────────
 

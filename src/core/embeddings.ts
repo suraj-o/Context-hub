@@ -1,25 +1,29 @@
-import OpenAI from "openai";
+import { pipeline, FeatureExtractionPipeline } from "@xenova/transformers";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Lazily load the pipeline so we don't start it immediately on import if not needed
+let embedder: FeatureExtractionPipeline | null = null;
+
+async function getEmbedder(): Promise<FeatureExtractionPipeline> {
+  if (!embedder) {
+    // all-MiniLM-L6-v2 outputs a 384 dimensional vector
+    embedder = await pipeline("feature-extraction", "Xenova/all-MiniLM-L6-v2");
+  }
+  return embedder;
+}
 
 /**
- * Generates a 1536-dimensional embedding vector for the given text
- * using OpenAI's `text-embedding-3-small` model.
+ * Generates a 384-dimensional embedding vector for the given text
+ * using Hugging Face's all-MiniLM-L6-v2 model via Transformers.js.
  *
- * The returned vector is used for cosine similarity search
- * against the `context_store.embedding` pgvector column.
+ * Runs locally inside Node.js.
  *
  * @param text - The input text to embed
- * @returns A 1536-length number array representing the embedding vector
- * @throws If the OpenAI API call fails
+ * @returns A 384-length number array representing the embedding vector
  */
 export async function generateEmbedding(text: string): Promise<number[]> {
-  const response = await openai.embeddings.create({
-    model: "text-embedding-3-small",
-    input: text,
-  });
-
-  return response.data[0].embedding;
+  const extractor = await getEmbedder();
+  const output = await extractor(text, { pooling: "mean", normalize: true });
+  
+  // The output is a Tensor. We convert its data payload into a standard array.
+  return Array.from(output.data);
 }

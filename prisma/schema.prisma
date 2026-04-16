@@ -97,7 +97,7 @@ model ContextEmbedding {
   id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   contextEntryId String       @map("context_entry_id") @db.Uuid
   /// pgvector embedding column — managed via raw SQL
-  embedding      Unsupported("vector(1536)")
+  embedding      Unsupported("vector(384)")
   chunkIndex     Int          @default(0) @map("chunk_index")
   chunkContent   String?      @map("chunk_content") @db.Text
   createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz()

@@ -6,7 +6,6 @@ import type {
   SearchContextInput,
   SearchContextOutput,
   SearchResult,
-  SearchMode,
 } from "../domain/types.js";
 
 // ── Types ──────────────────────────────────────────────────

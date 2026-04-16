@@ -62,7 +62,10 @@ export function chunkContent(
       }
     }
 
-    chunks.push(content.slice(start, end).trim());
+    let rawChunk = content.slice(start, end).trim();
+    // Strip isolated surrogates to avoid DB encoding errors
+    rawChunk = rawChunk.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|([^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/g, '$1');
+    chunks.push(rawChunk);
 
     // Move start forward, applying overlap
     const nextStart = end - overlap;
